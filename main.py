@@ -28,14 +28,24 @@ while resp != 0:
 ######## 5 - INFORMAÇÕES             ##########
 ######## 0 - SAIR                    ##########""")
 
-    resp = int(input("Qual opção você deseja: "))
+    try:
+        resp = int(input("Qual opção você deseja: "))
+    except ValueError:
+        print("\n[ERRO] Por favor, digite apenas números!")
+        resp = -1
+        continue 
 
-    if resp == 1: estoque.menu_estoque()
-    elif resp == 2: clientes.menu_clientes()
-    elif resp == 3: vendas.menu_vendas()
-    elif resp == 4: relatorios.menu_relatorios()
-    elif resp == 5: exibir_informacoes()
+    if resp == 1: 
+        estoque.menu_estoque()
+    elif resp == 2: 
+        clientes.menu_clientes()
+    elif resp == 3: 
+        vendas.menu_vendas()
+    elif resp == 4: 
+        relatorios.menu_relatorios()
+    elif resp == 5: 
+        exibir_informacoes()
     elif resp == 0:
         print("\n#################################\n##### PROGRAMA ENCERRADO ########\n#################################")
     else:
-        print("OPÇÃO INVÁLIDA!")
+        print("\nOPÇÃO INVÁLIDA!\n")

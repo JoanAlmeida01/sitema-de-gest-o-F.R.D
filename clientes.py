@@ -61,7 +61,12 @@ def menu_clientes():
 ######## 4 - ATUALIZAR CLIENTE       ##########
 ######## 5 - REMOVER CLIENTE         ##########
 ######## 6 - VOLTAR                  ##########""")
-        q = int(input("Qual opção você deseja: "))
+        try:
+            q = int(input("Qual opção você deseja: "))
+        except ValueError:
+            print("\n[ERRO] Por favor, digite apenas números!")
+            q = -1
+            continue 
         if q == 1: cadastrar_cliente()
         elif q == 2: listar_clientes()
         elif q == 3: buscar_cliente()
