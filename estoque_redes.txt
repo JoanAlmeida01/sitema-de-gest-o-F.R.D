@@ -1,2 +1,3 @@
 111;solasol;azul;la;150.0;11
 222;bucho de boi;verde;la;100.0;11
+333;garimpeira;camuflada;nailon;75.0;17
