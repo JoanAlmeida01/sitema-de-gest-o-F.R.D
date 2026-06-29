@@ -1,6 +1,5 @@
 import os
 from estoque import estoque, salvar_dados as salvar_estoque
-# IMPORTANTE: Agora importamos a lista AND a função de salvar do módulo clientes
 from clientes import clientes, salvar_clientes 
 
 vendas = []
@@ -50,7 +49,12 @@ def carregar_vendas():
 def nova_venda():
     limpar_tela()
     print("### NOVA VENDA ###\n")
-    cod_venda = int(input("Código da venda: "))
+    try:
+        cod_venda = int(input("Digite o código da rede: "))
+    except ValueError:
+        print("\n[ERRO] Código inválido!")
+        input("\nPressione Enter para voltar...")
+        return
     
     if any(v[0] == cod_venda for v in vendas):
         print("\n[ERRO] Já existe uma venda com este código!")
@@ -78,10 +82,8 @@ def nova_venda():
                 telefone = input("Telefone: ")
                 cidade = input("Cidade: ")
                 
-                # Adiciona o novo cliente na lista global de clientes
                 clientes.append([identificador_cliente, nome, telefone, cidade])
                 
-                # CORREÇÃO AQUI: Chama a função que grava fisicamente no 'clientes.txt'
                 salvar_clientes()
                 
                 print("\n[SUCESSO] Cliente cadastrado no sistema! Continuando com a venda...")
@@ -97,7 +99,6 @@ def nova_venda():
         cidade = input("Cidade: ")
         identificador_cliente = f"Sem CPF ({nome})"
 
-    # Coleta de informações do produto
     cod_produto = int(input("Código da rede (produto): "))
     qtd = int(input("Quantidade: "))
 
@@ -150,7 +151,12 @@ def historico_vendas():
 
 def buscar_venda():
     limpar_tela()
-    codigo = int(input("Código da venda: "))
+    try:
+        codigo = int(input("Digite o código da rede: "))
+    except ValueError:
+        print("\n[ERRO] Código inválido!")
+        input("\nPressione Enter para voltar...")
+        return
     for v in vendas:
         if v[0] == codigo:
             if v[1].isdigit() and len(v[1]) == 11:
