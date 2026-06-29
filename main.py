@@ -20,32 +20,33 @@ def exibir_informacoes():
 ###################################################""")
     input("\nPressione Enter para voltar ao menu principal...")
 
-# --- INICIALIZAÇÃO E CARREGAMENTO DOS DADOS ---
-# Certifique-se de que essas funções existem com esses nomes nos seus módulos.
-# Elas lêem os arquivos .txt e preenchem as listas 'estoque' e 'clientes'.
 try:
-    estoque.carregar_dados()  # Substitua pelo nome correto da função se for diferente
-    clientes.carregar_dados() # Substitua pelo nome correto da função se for diferente
+    estoque.carregar_dados()  
+    clientes.carregar_dados() 
 except AttributeError:
-    # Caso suas funções tenham outros nomes em estoque.py ou clientes.py, 
-    # o Python avisará aqui sem travar o início do programa
     print("[AVISO] Não foi possível carregar os dados automaticamente. Verifique os nomes das funções de leitura.")
     input("Pressione Enter para continuar...")
 
 resp = -1
 while resp != 0:
     limpar_tela()
-    print("#" * 35)
-    print("### SISTEMA DE REDES DE DORMIR ###")
-    print("#" * 35)
-    print("""
-###############################################
-######## 1 - GERENCIAR ESTOQUE       ##########
-######## 2 - GERENCIAR CLIENTES      ##########
-######## 3 - GERENCIAR VENDAS        ##########
-######## 4 - RELATÓRIOS              ##########
-######## 5 - INFORMAÇÕES             ##########
-######## 0 - SAIR                    ##########""")
+    print("#" * 96)
+    print(r""" _  _   __   _  _  _  _   __    ___  __ _    __  __ _  _  _  ____  __ _  ____  __  ____  _  _       
+/ )( \ / _\ ( \/ )( \/ ) /  \  / __)(  / )  (  )(  ( \/ )( \(  __)(  ( \(_  _)/  \(  _ \( \/ )      
+) __ (/    \/ \/ \/ \/ \(  O )( (__  )  (    )( /    /\ \/ / ) _) /    /  )( (  O ))   / )  /       
+\_)(_/\_/\_/\_)(_/\_)(_/ \__/  \___)(__\_)  (__)\_)__) \__/ (____)\_)__) (__) \__/(__\_)(__/        
+                         ____  _  _  ____  ____  ____  _  _                                         
+                        / ___)( \/ )/ ___)(_  _)(  __)( \/ )                                        
+                        \___ \ )  / \___ \  )(   ) _) / \/ \                                        
+                        (____/(__/  (____/ (__) (____)\_)(_/                                         """) 
+    print("#" * 96)
+    print("""                   ###############################################
+                   ######## 1 - GERENCIAR ESTOQUE       ##########
+                   ######## 2 - GERENCIAR CLIENTES      ##########
+                   ######## 3 - GERENCIAR VENDAS        ##########
+                   ######## 4 - RELATÓRIOS              ##########
+                   ######## 5 - INFORMAÇÕES             ##########
+                   ######## 0 - SAIR                    ##########""")
 
     try:
         resp = int(input("Qual opção você deseja: "))
