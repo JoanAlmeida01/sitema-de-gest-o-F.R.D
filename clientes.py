@@ -7,19 +7,15 @@ def limpar_tela():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def validar_cpf(cpf: str) -> bool:
-    # Remove caracteres não numéricos
     cpf = "".join(char for char in cpf if char.isdigit())
 
-    # Verifica se tem 11 dígitos ou se são todos números iguais (ex: 111.111.111-11)
     if len(cpf) != 11 or cpf == cpf[0] * 11:
         return False
 
-    # Validação do primeiro dígito verificador
     soma = sum(int(cpf[i]) * (10 - i) for i in range(9))
     resto = (soma * 10) % 11
     digito_1 = 0 if resto == 10 else resto
 
-    # Validação do segundo dígito verificador
     soma = sum(int(cpf[i]) * (11 - i) for i in range(10))
     resto = (soma * 10) % 11
     digito_2 = 0 if resto == 10 else resto
@@ -30,7 +26,6 @@ def salvar_clientes():
     try:
         with open(ARQUIVO_CLIENTES, "w", encoding="utf-8") as arquivo:
             for cliente in clientes:
-                # Salvando o CPF como string limpa ou formatada
                 arquivo.write(f"{cliente[0]};{cliente[1]};{cliente[2]};{cliente[3]}\n")
     except Exception as e:
         print(f"Erro ao salvar clientes: {e}")
@@ -46,14 +41,11 @@ def carregar_clientes():
                     if linha:
                         dados = linha.split(";")
                         if len(dados) == 4:
-                            # Mantemos dados[0] (CPF) como string
                             clientes.append([dados[0], dados[1], dados[2], dados[3]])
         except Exception as e:
             print(f"Erro ao carregar clientes: {e}")
 
-# --- FUNÇÃO DE ACOPLAMENTO PARA O MAIN.PY ---
 def carregar_dados():
-    """Função padrão chamada pelo main.py para garantir a leitura do arquivo txt"""
     carregar_clientes()
 
 def cadastrar_cliente():
@@ -68,13 +60,29 @@ def cadastrar_cliente():
         input("\nPressione Enter para voltar...")
         return
 
-    if any(c[0] == cpf_limpo for c in clientes):
+    cpf_existe = False
+    for c in clientes:
+        if c[0] == cpf_limpo:
+            cpf_existe = True
+            break
+
+    if cpf_existe:
         print("\n[ERRO] Já existe um cliente com este CPF!")
         input("\nPressione Enter para voltar...")
         return
 
     nome = input("Nome: ")
-    telefone = input("Telefone: ")
+
+    while True:
+        telefone_bruto = input("Telefone: ")
+        telefone_limpo = telefone_bruto.replace("(", "").replace(")", "").replace("-", "").replace(" ", "")
+        
+        if telefone_limpo.isdigit() and len(telefone_limpo) in [10, 11]:
+            telefone = telefone_limpo
+            break
+        else:
+            print("Formato de telefone inválido. Tente novamente.")
+
     cidade = input("Cidade: ")
 
     clientes.append([cpf_limpo, nome, telefone, cidade])
@@ -93,7 +101,6 @@ def listar_clientes():
         print(f"{'CPF':<15} | {'NOME':<25} | {'TELEFONE':<15} | {'CIDADE':<15}")
         print("-" * 80)
         for c in clientes:
-            # Formata o CPF para exibição bonita (###.###.###-##)
             cpf_formatado = f"{c[0][:3]}.{c[0][3:6]}.{c[0][6:9]}-{c[0][9:]}"
             print(f"{cpf_formatado:<15} | {c[1]:<25} | {c[2]:<15} | {c[3]:<15}")
         print("=" * 80)
@@ -125,10 +132,19 @@ def atualizar_cliente():
     for c in clientes:
         if c[0] == cpf_limpo:
             c[1] = input("Novo nome: ")
-            c[2] = input("Novo telefone: ")
+            
+            while True:
+                telefone_bruto = input("Novo telefone: ")
+                telefone_limpo = telefone_bruto.replace("(", "").replace(")", "").replace("-", "").replace(" ", "")
+                if telefone_limpo.isdigit() and len(telefone_limpo) in [10, 11]:
+                    c[2] = telefone_limpo
+                    break
+                else:
+                    print("Formato de telefone inválido. Tente novamente.")
+                    
             c[3] = input("Nova cidade: ")
             salvar_clientes()
-            print("\nCliente updated!")
+            print("\nCliente atualizado!")
             input("\nPressione Enter para voltar...")
             return
     print("\nCliente não encontrado.")
@@ -177,6 +193,5 @@ def menu_clientes():
         elif q == 4: atualizar_cliente()
         elif q == 5: remover_cliente()
 
-# Para testar diretamente o menu se rodar este arquivo
 if __name__ == "__main__":
     menu_clientes()
