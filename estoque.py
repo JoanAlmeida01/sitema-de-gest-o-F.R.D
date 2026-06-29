@@ -47,7 +47,13 @@ def cadastrar_rede():
         input("\nPressione Enter para voltar...")
         return
     
-    if any(item[0] == codigo for item in estoque):
+    codigo_existe = False
+    for item in estoque:
+        if item[0] == codigo:
+            codigo_existe = True
+            break 
+
+    if codigo_existe:
         print("\n[ERRO] Já existe uma rede com esse código!")
         input("\nPressione Enter para voltar...")
         return
@@ -116,13 +122,28 @@ def atualizar_rede():
                     input("Pressione Enter...")
                     continue
 
-                if op == 1: item[1] = input("Novo modelo: ")
-                elif op == 2: item[2] = input("Nova cor: ")
-                elif op == 3: item[3] = input("Novo material: ")
-                elif op == 4: item[4] = float(input("Novo preço: "))
-                elif op == 5: item[5] = int(input("Nova quantidade: "))
-                elif op == 6: print("\nAlterações finalizadas.")
-                else: print("Opção inválida!")
+                if op == 1: 
+                    item[1] = input("Novo modelo: ")
+                elif op == 2: 
+                    item[2] = input("Nova cor: ")
+                elif op == 3: 
+                    item[3] = input("Novo material: ")
+                elif op == 4: 
+                    try:
+                        item[4] = float(input("Novo preço: "))
+                    except ValueError:
+                        print("\n[ERRO] Preço inválido! Alteração descartada.")
+                        input("Pressione Enter...")
+                elif op == 5: 
+                    try:
+                        item[5] = int(input("Nova quantidade: "))
+                    except ValueError:
+                        print("\n[ERRO] Quantidade inválida! Alteração descartada.")
+                        input("Pressione Enter...")
+                elif op == 6: 
+                    print("\nAlterações finalizadas.")
+                else: 
+                    print("Opção inválida!")
             
             salvar_dados()
             input("\nPressione Enter para continuar...")
@@ -181,7 +202,7 @@ def menu_estoque():
         limpar_tela()
         print("""
 ###############################################
-#         GERENCIAMENTO DE ESTOQUE            #
+#       GERENCIAMENTO DE ESTOQUE              #
 ###############################################
 ######## 1 - CADASTRAR REDE          ##########
 ######## 2 - LISTAR REDES            ##########
@@ -201,3 +222,6 @@ def menu_estoque():
         elif q == 3: atualizar_rede()
         elif q == 4: buscar_rede()
         elif q == 5: remover_rede()
+
+if __name__ == "__main__":
+    menu_estoque()
