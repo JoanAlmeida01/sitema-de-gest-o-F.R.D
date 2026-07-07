@@ -1,3 +1,7 @@
 111;solasol;azul;la;150.0;11
 222;bucho de boi;verde;la;100.0;11
 333;garimpeira;camuflada;nailon;75.0;17
+444;cadeira;marrom;la;200.0;20
+555;bahiana;cinza;fio10;100.0;25
+666;rede casal;amarelo;fio10;120.0;18
+777;artesanal;vermelho;bordado;200.0;19
